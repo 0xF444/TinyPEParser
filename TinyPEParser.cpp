@@ -1,9 +1,16 @@
 #include <stdio.h>
 #include <windows.h>
 #include "PE.h"
+
+void PrintImportFunction(PIMAGE_IMPORT_BY_NAME import_by_name, ...)
+{
+	printf("\t%s\n", import_by_name->Name);
+}
+
 int main(int argc, char** argv) {
 	HANDLE hFile = CreateFileA(argv[1], GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-	if (argc < 2) {
+	if (argc < 2)
+	{
 		printf("Usage: TinyImportParser.exe <image_file>\n");
 		return -1;
 	}
@@ -55,11 +62,11 @@ int main(int argc, char** argv) {
 		DWORD oftoff = RVA2Offset(base, i->OriginalFirstThunk);
 		if (CheckPEBitness(base) == IMAGE_IS_x64)
 		{
-			ProcessThunks<PIMAGE_THUNK_DATA64>(base, oftoff);
+			ObtainThunkData<PIMAGE_THUNK_DATA64>(base, oftoff, &PrintImportFunction);
 		}
 		else if (CheckPEBitness(base) == IMAGE_IS_x86)
 		{
-			ProcessThunks<PIMAGE_THUNK_DATA32>(base, oftoff);
+			ObtainThunkData<PIMAGE_THUNK_DATA32>(base, oftoff, &PrintImportFunction);
 		}
 		// TODO: Implement API sets parsing
 
