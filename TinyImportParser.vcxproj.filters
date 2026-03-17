@@ -18,9 +18,15 @@
     <ClCompile Include="TinyPEParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="libs\argparse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\argparse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

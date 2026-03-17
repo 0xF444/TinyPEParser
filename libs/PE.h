@@ -39,6 +39,7 @@ bool CheckPESignatures(LPVOID base)
 		}
 		return false;
 	}
+	return false;
 }
 
 DWORD RVA2Offset(PVOID ImageBase, DWORD RVA)

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <windows.h>
-#include "PE.h"
+#include "libs/PE.h"
+#include <assert.h>
 
 void PrintImportFunction(PIMAGE_IMPORT_BY_NAME import_by_name, ...)
 {
@@ -11,7 +12,7 @@ int main(int argc, char** argv) {
 	HANDLE hFile = CreateFileA(argv[1], GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (argc < 2)
 	{
-		printf("Usage: TinyImportParser.exe <image_file>\n");
+		printf("Usage: TinyPEParser.exe <image_file>\n");
 		return -1;
 	}
 	if (hFile == INVALID_HANDLE_VALUE)
@@ -22,10 +23,7 @@ int main(int argc, char** argv) {
 	DWORD HighSize;
 	DWORD MAXSIZE = GetFileSize(hFile, &HighSize);
 	LPVOID base = malloc(MAXSIZE + HighSize);
-	if (!base) {
-		printf("Error allocating memory, aborting!\n");
-		return -1;
-	}
+	assert(base);
 	memset(base, 0, MAXSIZE);
 	BOOL isRead = ReadFile(hFile, base, MAXSIZE + HighSize, NULL, NULL);
 	if (!isRead)
