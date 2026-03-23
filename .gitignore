@@ -56,8 +56,6 @@ dkms.conf
 
 # Visual Studio files
 .vs/
-*.vcxproj
-*.vcxproj.filters
 *.vcxproj.user
 # Build Path
 build/
